@@ -1,0 +1,25 @@
+{
+  "name": "vimeo.event.tracker",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eu81273/vimeo.event.tracker.git"
+  },
+  "author": "AHN JAE-HA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eu81273/vimeo.event.tracker/issues"
+  },
+  "homepage": "https://eu81273.github.io/vimeo.event.tracker",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-minify-css": "^1.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.1.0"
+  }
+}
