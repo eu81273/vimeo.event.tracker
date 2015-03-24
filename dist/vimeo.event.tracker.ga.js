@@ -1,1 +1,171 @@
-"use strict";!function(e){function n(e){for(var n=t.item(e),i=n.children,a=i.length,s=void 0,e=0;a>e;e++)if("movie"==i.item(e).name){s=i.item(e).value;break}return n.api_addEventListener("play","vimeoAction('play', '"+s+"')"),n.api_addEventListener("pause","vimeoAction('pause', '"+s+"')"),n.api_addEventListener("finish","vimeoAction('finish', '"+s+"')"),n.api_addEventListener("playProgress","progressAction.from('"+s+"').amount"),!1}for(var t=document.getElementsByTagName("object"),i=t.length,a=0;i>a;a++)t.item(a).innerHTML+="<param name='flashvars' value='api=1&api_ready=vimeoFlashReady&js_swf_id="+a+"'/>";e.vimeoFlashReady=n}(window),!function(e){function n(e){for(var n=JSON.parse(e.data),s=void 0,o=0;a>o;o++)i.item(o).contentWindow===e.source&&(s=i.item(o));switch(n.event){case"ready":t(s);break;case"play":vimeoAction("play",s.src);break;case"pause":vimeoAction("pause",s.src);break;case"finish":vimeoAction("finish",s.src);break;case"playProgress":progressAction.from(s.src).amount(n.data)}}function t(e){var n=e.src.split("?")[0];e.contentWindow.postMessage(JSON.stringify({method:"addEventListener",value:"pause"}),n),e.contentWindow.postMessage(JSON.stringify({method:"addEventListener",value:"finish"}),n),e.contentWindow.postMessage(JSON.stringify({method:"addEventListener",value:"play"}),n),e.contentWindow.postMessage(JSON.stringify({method:"addEventListener",value:"playProgress"}),n)}var i=document.getElementsByTagName("iframe"),a=i.length;e.addEventListener&&e.addEventListener("message",n,!1),e.attachEvent&&e.attachEvent("onmessage",n,!1)}(window),!function(e){function n(e,n){switch(~~(100*e)){case 25:25!==t[n]&&(t[n]=25,vimeoAction("25%",n));break;case 50:50!==t[n]&&(t[n]=50,vimeoAction("50%",n));break;case 75:75!==t[n]&&(t[n]=75,vimeoAction("75%",n))}}var t={},i={src:void 0,from:function(e){return this.src=e,this},amount:function(e){n(e.percent,this.src)}};e.progressAction=i}(window),!function(e){function n(e,n){"undefined"!=typeof _gaq&&"function"==typeof _gaq.push&&_gaq.push(["_trackEvent","Vimeo",e,n,void 0,!0])}e.vimeoAction=n}(window);
+'use strict';
+
+!function (global) {
+
+/*
+	Flash Embed
+*/
+	var objects = document.getElementsByTagName('object');
+	var objectLength = objects.length;
+
+	//add parameter for api
+	for (var i=0; i<objectLength; i++) {
+		objects.item(i).innerHTML += "<param name='flashvars' value='api=1&api_ready=vimeoFlashReady&js_swf_id=" + i + "'/>";
+	}
+
+	//when ready, flash type vimeo callbacks this function
+	function vimeoFlashReady (i) {
+		var vimeo = objects.item(i);
+		var params = vimeo.children;
+		var paramLength = params.length;
+		var src = undefined;
+
+		for (var i=0; i<paramLength; i++) {
+			if (params.item(i).name == "movie") {
+				src = params.item(i).value;
+				break;
+			}
+		}
+
+		//add event listener to flash embed
+		vimeo.api_addEventListener("play", "vimeoAction('play', '" + src + "')");
+		vimeo.api_addEventListener("pause", "vimeoAction('pause', '" + src + "')");
+		vimeo.api_addEventListener("finish", "vimeoAction('finish', '" + src + "')");
+		vimeo.api_addEventListener("playProgress", "progressAction.from('" + src + "').amount");
+
+		return false; 
+	}
+
+
+/*
+	Regist global object
+*/
+
+	global.vimeoFlashReady = vimeoFlashReady;
+
+}(window);
+'use strict';
+
+!function (global) {
+
+/*
+	Universal Embed
+*/
+	var iframes = document.getElementsByTagName('iframe');
+	var iframeLength = iframes.length;
+
+	global.addEventListener && global.addEventListener('message', onMessageReceived, false);
+	global.attachEvent && global.attachEvent('onmessage', onMessageReceived, false);
+
+	function onMessageReceived (event) {
+		var param = JSON.parse(event.data);
+		var vimeo = undefined;
+
+		//identify event source iframe
+		for (var i=0; i<iframeLength; i++) {
+			if(iframes.item(i).contentWindow === event.source){
+				vimeo = iframes.item(i);
+			}
+		}
+
+		switch (param.event) {
+			case 'ready':
+				vimeoReady(vimeo);
+				break;
+			   
+			case 'play':
+				vimeoAction('play', vimeo.src);
+				break;
+				
+			case 'pause':
+				vimeoAction('pause', vimeo.src);
+				break;
+			   
+			case 'finish':
+				vimeoAction('finish', vimeo.src);
+				break;
+
+			case 'playProgress':
+				progressAction.from(vimeo.src).amount(param.data);
+				break;
+		}
+	}
+
+	function vimeoReady (vimeo) {
+		var url = vimeo.src.split('?')[0];
+
+		//add event listener to universal embed
+		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'pause'}), url);
+		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'finish'}), url);
+		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'play'}), url);
+		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'playProgress'}), url);
+	}
+
+}(window);
+'use strict';
+
+!function (global) {
+/*
+	Actions
+*/
+
+	var vimeos = {};
+
+	var progressAction = {
+		src: undefined,
+		from: function (src) {
+			this.src = src;
+			return this;
+		},
+		amount: function (progress) {
+			progressEventDivider(progress.percent, this.src);
+		}
+	}
+
+	function progressEventDivider (percent, src) {
+		switch (~~(percent*100)) {
+			case 25:
+				if (vimeos[src] !== 25) {
+					vimeos[src] = 25;
+					vimeoAction('25%', src);
+				}
+			break;
+
+			case 50:
+				if (vimeos[src] !== 50) {
+					vimeos[src] = 50;
+					vimeoAction('50%', src);
+				}
+			break;
+
+			case 75:
+				if (vimeos[src] !== 75) {
+					vimeos[src] = 75;
+					vimeoAction('75%', src);
+				}
+			break;
+		}
+	}
+
+/*
+	Regist global object
+*/
+
+	global.progressAction = progressAction;
+
+}(window);
+'use strict';
+
+!function (global) {
+	function vimeoAction (action, src) {
+		if (typeof _gaq !== "undefined" && typeof _gaq.push === "function") {
+			 _gaq.push(['_trackEvent', 'Vimeo', action, src, undefined, true]);
+		}
+	}
+
+/*
+	Regist global object
+*/
+	global.vimeoAction = vimeoAction;
+
+}(window);
