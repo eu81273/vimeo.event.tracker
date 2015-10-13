@@ -1,12 +1,9 @@
-'use strict';
-
+//Flash Embed
 !function (global) {
+	'use strict';
 
-/*
-	Flash Embed
-*/
 	var objects = document.getElementsByTagName('object');
-	var objectLength = objects.length;
+	var objectLength = objects.length || 0;
 
 	//add parameter for api
 	for (var i=0; i<objectLength; i++) {
@@ -17,7 +14,7 @@
 	function vimeoFlashReady (i) {
 		var vimeo = objects.item(i);
 		var params = vimeo.children;
-		var paramLength = params.length;
+		var paramLength = params.length || 0;
 		var src = undefined;
 
 		for (var i=0; i<paramLength; i++) {
@@ -33,14 +30,8 @@
 		vimeo.api_addEventListener("finish", "vimeoAction('finish', '" + src + "')");
 		vimeo.api_addEventListener("playProgress", "progressAction.from('" + src + "').amount");
 
-		return false; 
+		return false;
 	}
 
-
-/*
-	Regist global object
-*/
-
 	global.vimeoFlashReady = vimeoFlashReady;
-
 }(window);

@@ -1,15 +1,12 @@
-'use strict';
-
+//UA
 !function (global) {
+	'use strict';
+
 	function vimeoAction (action, src) {
-		if (typeof ga === "function") {
+		if (typeof ga === 'function') {
 			ga('send', 'event', 'Vimeo', action, src, undefined, {'nonInteraction': true});
 		}
 	}
 
-/*
-	Regist global object
-*/
 	global.vimeoAction = vimeoAction;
-
 }(window);

@@ -1,12 +1,9 @@
-'use strict';
-
+//Flash Embed
 !function (global) {
+	'use strict';
 
-/*
-	Flash Embed
-*/
 	var objects = document.getElementsByTagName('object');
-	var objectLength = objects.length;
+	var objectLength = objects.length || 0;
 
 	//add parameter for api
 	for (var i=0; i<objectLength; i++) {
@@ -17,7 +14,7 @@
 	function vimeoFlashReady (i) {
 		var vimeo = objects.item(i);
 		var params = vimeo.children;
-		var paramLength = params.length;
+		var paramLength = params.length || 0;
 		var src = undefined;
 
 		for (var i=0; i<paramLength; i++) {
@@ -33,33 +30,32 @@
 		vimeo.api_addEventListener("finish", "vimeoAction('finish', '" + src + "')");
 		vimeo.api_addEventListener("playProgress", "progressAction.from('" + src + "').amount");
 
-		return false; 
+		return false;
 	}
 
-
-/*
-	Regist global object
-*/
-
 	global.vimeoFlashReady = vimeoFlashReady;
-
 }(window);
-'use strict';
 
+//Universal Embed
 !function (global) {
+	'use strict';
 
-/*
-	Universal Embed
-*/
 	var iframes = document.getElementsByTagName('iframe');
-	var iframeLength = iframes.length;
+	var iframeLength = iframes.length || 0;
 
 	global.addEventListener && global.addEventListener('message', onMessageReceived, false);
 	global.attachEvent && global.attachEvent('onmessage', onMessageReceived, false);
 
 	function onMessageReceived (event) {
-		var param = JSON.parse(event.data);
-		var vimeo = undefined;
+		var vimeo = {};
+		var param = {};
+
+		try {
+			param = JSON.parse(event.data);
+		}
+		catch (e) {
+			param.event = 'error';
+		}
 
 		//identify event source iframe
 		for (var i=0; i<iframeLength; i++) {
@@ -72,15 +68,15 @@
 			case 'ready':
 				vimeoReady(vimeo);
 				break;
-			   
+
 			case 'play':
 				vimeoAction('play', vimeo.src);
 				break;
-				
+
 			case 'pause':
 				vimeoAction('pause', vimeo.src);
 				break;
-			   
+
 			case 'finish':
 				vimeoAction('finish', vimeo.src);
 				break;
@@ -92,7 +88,7 @@
 	}
 
 	function vimeoReady (vimeo) {
-		var url = vimeo.src.split('?')[0];
+		var url = vimeo && vimeo.src && vimeo.src.split('?')[0] || "vimeo-url-not-found";
 
 		//add event listener to universal embed
 		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'pause'}), url);
@@ -100,17 +96,13 @@
 		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'play'}), url);
 		vimeo.contentWindow.postMessage(JSON.stringify({method: 'addEventListener', value: 'playProgress'}), url);
 	}
-
 }(window);
-'use strict';
 
+//Actions Notifier
 !function (global) {
-/*
-	Actions
-*/
+	'use strict';
 
 	var vimeos = {};
-
 	var progressAction = {
 		src: undefined,
 		from: function (src) {
@@ -120,10 +112,10 @@
 		amount: function (progress) {
 			progressEventDivider(progress.percent, this.src);
 		}
-	}
+	};
 
 	function progressEventDivider (percent, src) {
-		switch (~~(percent*100)) {
+		switch (percent*100>>0) {
 			case 25:
 				if (vimeos[src] !== 25) {
 					vimeos[src] = 25;
@@ -147,25 +139,18 @@
 		}
 	}
 
-/*
-	Regist global object
-*/
-
 	global.progressAction = progressAction;
-
 }(window);
-'use strict';
 
+//GA
 !function (global) {
+	'use strict';
+
 	function vimeoAction (action, src) {
-		if (typeof _gaq !== "undefined" && typeof _gaq.push === "function") {
-			 _gaq.push(['_trackEvent', 'Vimeo', action, src, undefined, true]);
+		if (typeof _gaq !== 'undefined' && typeof _gaq.push === 'function') {
+			_gaq.push(['_trackEvent', 'Vimeo', action, src, undefined, true]);
 		}
 	}
 
-/*
-	Regist global object
-*/
 	global.vimeoAction = vimeoAction;
-
 }(window);

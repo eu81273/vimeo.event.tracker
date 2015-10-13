@@ -1,12 +1,8 @@
-'use strict';
-
+//Actions Notifier
 !function (global) {
-/*
-	Actions
-*/
+	'use strict';
 
 	var vimeos = {};
-
 	var progressAction = {
 		src: undefined,
 		from: function (src) {
@@ -16,10 +12,10 @@
 		amount: function (progress) {
 			progressEventDivider(progress.percent, this.src);
 		}
-	}
+	};
 
 	function progressEventDivider (percent, src) {
-		switch (~~(percent*100)) {
+		switch (percent*100>>0) {
 			case 25:
 				if (vimeos[src] !== 25) {
 					vimeos[src] = 25;
@@ -43,10 +39,5 @@
 		}
 	}
 
-/*
-	Regist global object
-*/
-
 	global.progressAction = progressAction;
-
 }(window);
