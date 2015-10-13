@@ -2,15 +2,14 @@
 Vimeo Event Tracker (Flash/Universal embed supported) for Google Analytics/Universal Analytics/Google Tag Manager.
 
 ## Usage
-Include the script just before the `</body>` tag.
+Include the script before the `</body>` tag.
 
-    Flash and JS security restrictions will prevent the API from working when run locally, so you have to run this on a web server instead of open directly in your browser.
+*Flash and JS security restrictions will prevent the API from working when run locally, so you have to run this on a web server instead of open directly in your browser*.
 
 ### Basic
 ```html
 <body>
-<iframe src="https://player.vimeo.com/video/22439234?api=1&player_id=vimeo-player-1" id="vimeo-player-1" width="640" height="390" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-<iframe src="https:////player.vimeo.com/video/22439234?api=1&player_id=vimeo-player-2" id="vimeo-player-2" width="640" height="390" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+<iframe src="https://player.vimeo.com/video/141812811" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 <script src="vimeo.event.tracker.ga.min.js"></script>
 </body>
@@ -29,9 +28,9 @@ Include the script just before the `</body>` tag.
 
 * Category: Vimeo
 * Action:
-  * **playProgress 25%**: when the video reaches 25% of the total video time.
-  * **playProgress 50%**: when the video reaches 50% of the total video time.
-  * **playProgress 75%**: when the video reaches 75% of the total video time.
+  * **25%**: when the video reaches 25% of the total video time.
+  * **50%**: when the video reaches 50% of the total video time.
+  * **75%**: when the video reaches 75% of the total video time.
 * Label: URL of embedded video on Vimeo.
 
 ## Browser Support
