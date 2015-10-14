@@ -22,8 +22,10 @@ app.controller('defaultController', ['$scope', '$window', 'panels', function ($s
 
 	//Universal Analytics Emulation
 	$window.ga = function () {
-		$scope.eventLogs.push(Array.prototype.slice.call(arguments));
-		$scope.$apply();
+		var args = Array.prototype.slice.call(arguments);
+		$scope.$apply(function () {
+			$scope.eventLogs.push(args);
+		});
 	};
 
 	$scope.menuOpen = function () {
