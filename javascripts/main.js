@@ -4,7 +4,6 @@ var app = angular.module('angularApplication', ['angular.panels']);
 
 //add panels
 app.config(['panelsProvider', function (panelsProvider) {
-
 	panelsProvider
 		.add({
 			id: 'menu',
@@ -17,17 +16,6 @@ app.config(['panelsProvider', function (panelsProvider) {
 
 //default controller
 app.controller('defaultController', ['$scope', '$window', 'panels', function ($scope, $window, panels) {
-
-	$scope.eventLogs = [];
-
-	//Universal Analytics Emulation
-	$window.ga = function () {
-		var args = Array.prototype.slice.call(arguments);
-		$scope.$apply(function () {
-			$scope.eventLogs.push(args);
-		});
-	};
-
 	$scope.menuOpen = function () {
 		$scope.$broadcast('menu');
 	};
@@ -39,3 +27,11 @@ app.controller('menuCtrl', ['$scope', 'panels', function ($scope, panels) {
 		panels.open("menu");
 	});
 }]);
+
+//Universal Analytics Emulation
+function ga () {
+	var args = Array.prototype.slice.call(arguments);
+	var eventLog = document.querySelector("#eventLog");
+
+	eventLog.innerHTML = eventLog.innerHTML + "	<div class=\"alert alert-info\"><p>" + JSON.stringify(args, null, "  ") + "</p></div>"
+};
