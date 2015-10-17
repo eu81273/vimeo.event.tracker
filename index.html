@@ -5,6 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 
+	<link href="//fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+	<link href="//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
+
 	<link href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.2/sandstone/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="//rawgit.com/eu81273/angular.panels/master/dist/angular.panels.min.css" rel="stylesheet" type="text/css">
@@ -47,72 +50,61 @@
 		<div class="container">
 			<div class="row">
 				<h2><i class="fa fa-play-circle"></i> Example</h2>
-
-				<div class="text-center"><iframe src="https://player.vimeo.com/video/141812811" width="1170" height="658" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
-
 				<p>This example shows that what parameters is passed to Universal Analytics function. Try press the play button.</p>
+				<p>&nbsp;</p>
+				<div class="text-center"><iframe src="https://player.vimeo.com/video/21294655" width="1170" height="658" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
 
-				<div id="eventLog">
-				</div>
+				<h4>Event Log</h4>
+
+				<div id="eventLog"></div>
 			</div>
 		</div>
 	</section>
 
-<!--
 	<section class="content-section container-fluid" id="quickstart">
 		<div class="container">
 			<div class="row">
 				<h2><i class="fa fa-bolt"></i> Quic start</h2>
 
-				<p>Copy the script and css into your project and add a script and link tag to your page.</p>
-				<pre><code data-ng-non-bindable class="language-markup">코드</code></pre>
+				<p>Include the script before the &lt;/body&gt; tag.</p>
+				<pre><code data-ng-non-bindable class="language-markup">&lt;body&gt;
+	&lt;iframe src="https://player.vimeo.com/video/141812811" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+
+	&lt;script src="vimeo.event.tracker.ga.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
 
 				<br/><br/>
-				<p>And add panels container tag to your application.</p>
-				<pre><code data-ng-non-bindable class="language-markup">코드</code></pre>
+				<p>The example above is for Google Analytics. For Universal Analytics, you need to replace "vimeo.event.tracker.ga.min.js" into "vimeo.event.tracker.ua.min.js" like below.</p>
+				<pre><code data-ng-non-bindable class="language-markup">&lt;body&gt;
+	&lt;iframe src="https://player.vimeo.com/video/141812811" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+
+	&lt;script src="vimeo.event.tracker.ua.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
 
 				<br/><br/>
-				<p>Add a dependency to your application module and configure panel settings.</p>
-				<pre><code data-ng-non-bindable class="language-javascript">코드</code></pre>
-
-
-				<br/><br/>
-				<p>each panel's attributes are..</p>
-				<dl class="">
-					<dt><label class="label label-default">id</label></dt><dd>panel's unique id.</dd>
-					<dt><label class="label label-default">position</label></dt><dd>the side panel slides from top/right/bottom/left.</dd>
-					<dt><label class="label label-default">size</label></dt><dd>panel's height or width. unit(px,em,%..) is required.</dd>
-					<dt><label class="label label-default">templateUrl</label></dt><dd>panel template url.</dd>
-					<dt><label class="label label-default">controller</label></dt><dd>panel's controller name.</dd>
-					<dt><label class="label label-default">openCallbackFunction</label></dt><dd>panel open callback.</dd>
-					<dt><label class="label label-default">closeCallbackFunction</label></dt><dd>panel close callback.</dd>
+				<p><strong>Basic event trackers</strong></p>
+				<dl class="dl-horizontal">
+					<dt><label class="label label-default">Category</label></dt><dd>Vimeo</dd>
+					<dt><label class="label label-default">Action</label></dt><dd>
+						play: when the video starts playing.<br/>
+						pause: when the video is paused.<br/>
+						finish: when the video reaches 100% completion.</dd>
+					<dt><label class="label label-default">Label</label></dt><dd>URL of embedded video on Vimeo.</dd>
 				</dl>
 
 				<br/><br/>
-				<p>To open the panel, inject panels service to your app then call the service method like below.</p>
-				<pre><code data-ng-non-bindable class="language-javascript">
-					코드
-				</code></pre>
-
-				<br/><br/>
-				<p>It's <strong>all</strong>. Full source of the demo is below.</p>
-
-				<br /><br /><br /><br />
-
-				<p>index.html</p>
-				<pre><code data-ng-non-bindable class="language-markup">
-					코드
-				</code></pre>
-
-				<br />
-				<p>left.html</p>
-				<pre><code data-ng-non-bindable class="language-markup">
-					코드
-				</code></pre>
-
+				<p><strong>Progress event trackers</strong></p>
+				<dl class="dl-horizontal">
+					<dt><label class="label label-default">Category</label></dt><dd>Vimeo</dd>
+					<dt><label class="label label-default">Action</label></dt><dd>
+						25%: when the video reaches 25% of the total video time.<br/>
+						50%: when the video reaches 50% of the total video time.<br/>
+						75%: when the video reaches 75% of the total video time.</dd>
+					<dt><label class="label label-default">Label</label></dt><dd>URL of embedded video on Vimeo.</dd>
+				</dl>
 			</div>
 		</div>
-	</section> -->
+	</section>
 
 
 

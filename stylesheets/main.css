@@ -1,21 +1,28 @@
-@font-face {
-	font-family: 'Hanna';
-	font-style: normal;
-	font-weight: 400;
-	src: url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.eot);
-	src:
-		url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.eot?#iefix) format('embedded-opentype'),
-		url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.woff2) format('woff2'),
-		url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.woff) format('woff'),
-		url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.ttf) format('truetype');
+* h1, * h2, * h3, * h4, * h5, * h6 { font-family: 'Hanna', 'Malgun Gothic'; }
+
+body {
+	font-family: 'Source Sans Pro Regular', 'Helvetica Neue', helvetica, arial, sans-serif;
+	font-size: 12px;
 }
 
-*, * h1, * h2, * h3, * h4, * h5, * h6 { font-family: 'Hanna', 'Malgun Gothic'; }
+pre {
+	font-size: 1.5rem;
+	padding: 2.5em;
+	border: none;
+	border-radius: 0.8em;
+}
+	pre * {
+		font-family: 'Nanum Gothic Coding';
+		font-weight: bold;
+	}
 
 .navbar-fixed-top {
 	z-index: 50;
 }
 
+.navbar-brand {
+	font-family: 'Hanna';
+}
 
 
 .title-section {
