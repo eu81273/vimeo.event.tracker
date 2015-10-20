@@ -6,7 +6,7 @@ body {
 }
 
 pre {
-	font-size: 1.5rem;
+	font-size: 1.7rem;
 	padding: 2.5em;
 	border: none;
 	border-radius: 0.8em;
@@ -42,19 +42,21 @@ pre {
 	}
 
 	.title-section h1 {
-		font-size: 100px;
+		font-size: 80px;
 		color: #FFF;
 	}
 
 	/* 작은 화면 */
 	@media screen and ( max-width: 768px ){
 		.title-section h1 {
-			font-size: 50px;
+			font-size: 40px;
 		}
 	}
 
 	.title-section p {
+		font-family: 'Hanna';
 		font-size: 20px;
+		font-weight: bold;
 		color: #EEE;
 	}
 
@@ -82,8 +84,6 @@ pre {
 	font-size: 14px;
 	font-family: Consolas, Monaco, 'Andale Mono', monospace;
 }
-
-
 
 
 
